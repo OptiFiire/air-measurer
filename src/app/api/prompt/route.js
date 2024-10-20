@@ -1,17 +1,15 @@
+import axios from 'axios';
 import { NextResponse } from 'next/server';
-import OpenAI from 'openai';
-
-const openai = new OpenAI({ apiKey: process.env.OPENAI_KEY });
 
 export async function POST(req) {
-  if (req.method !== "POST") {
-    return new NextResponse(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
-  }
+    if (req.method !== "POST") {
+        return new NextResponse(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
+    }
 
-  try {
-    const { pm25, temperature, humidity, tvoc, co, co2 } = await req.json();
+    try {
+        const { pm25, temperature, humidity, tvoc, co, co2 } = await req.json();
 
-    const prompt = `
+        const prompt = `
       Evaluate the air quality for each variable and provide feedback indicating whether the levels are perfect, suitable, moderately high/low, dangerously high/low, hazardous :
       - PM2.5: ${pm25} µg/m³
       - Temperature: ${temperature} °C
@@ -23,20 +21,20 @@ export async function POST(req) {
       Explain any potential health risks or recommendations for improving the air quality, if necessary.
     `;
 
-    const stream = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo-instruct",
-      messages: [{ role: "user", content: prompt }],
-      stream: true,
-    });
+        const request = await axios({
+            method: 'POST',
+            url: 'https://api.openai.com/v1/chat/completions',
+            headers: { Authorization: `Bearer ${process.env.OPENAI_KEY}` },
+            data: {
+                "model": 'gpt-4o-mini',
+                "messages": [{ "role": "user", "content": prompt }],
+                "temperature": 0.7,
+            }
+        });
 
-    let generatedText = '';
-    for await (const chunk of stream) {
-      generatedText += chunk.choices[0]?.delta?.content || "";
+        return NextResponse.json({ message: request.data.choices[0].message });
+    } catch (error) {
+        console.error('Error generating response from OpenAI:', error);
+        return new NextResponse(JSON.stringify({ error: 'Failed to generate response' }), { status: 500 });
     }
-
-    return NextResponse.json({ message: generatedText });
-  } catch (error) {
-    console.error('Error generating response from OpenAI:', error);
-    return new NextResponse(JSON.stringify({ error: 'Failed to generate response' }), { status: 500 });
-  }
 }
