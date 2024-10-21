@@ -5,7 +5,7 @@ import { Input } from '@nextui-org/input'
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Search, SendHorizonal } from 'lucide-react';
+import { Atom, Flame, Search, SendHorizonal, Sprout, Thermometer, TriangleAlert, Waves } from 'lucide-react';
 
 export default function Home() {
   const [formData, setFormData] = useState({
@@ -79,12 +79,12 @@ export default function Home() {
   };
 
   const inputFields = [
-    { label: 'PM2.5 (µg/m³)', name: 'pm25' },
-    { label: 'Temperature (°C)', name: 'temperature' },
-    { label: 'Humidity (%)', name: 'humidity' },
-    { label: 'TVOC (µg/m³)', name: 'tvoc' },
-    { label: 'CO (ppm)', name: 'co' },
-    { label: 'CO2 (ppm)', name: 'co2' },
+    { label: 'PM2.5 (µg/m³)', name: 'pm25', placeholder: 'PM2.5', icon: (<Atom size={20} className='text-lime-100/50'/>) },
+    { label: 'Temperature (°C)', name: 'temperature', placeholder: 'Temperature', icon: (<Thermometer size={20} className='text-lime-100/50'/>)  },
+    { label: 'Humidity (%)', name: 'humidity', placeholder: 'Humidity', icon: (<Waves size={20} className='text-lime-100/50'/>)  },
+    { label: 'TVOC (µg/m³)', name: 'tvoc', placeholder: 'TVOC', icon: (<TriangleAlert size={20} className='text-lime-100/50'/>)  },
+    { label: 'CO (ppm)', name: 'co', placeholder: 'CO', icon: (<Flame size={20} className='text-lime-100/50'/>)  },
+    { label: 'CO2 (ppm)', name: 'co2', placeholder: 'CO2', icon: (<Sprout size={20} className='text-lime-100/50'/>)  },
   ];
 
   return (
@@ -109,16 +109,20 @@ export default function Home() {
                   isInvalid={!!formErrors[field.name]}
                   value={formData[field.name]}
                   errorMessage={formErrors[field.name]}
+                  startContent={field.icon}
+                  placeholder={`Enter ${field.placeholder} value...`}
                   classNames={{
-                    label: "dark:text-white/90",
+                    label: "dark:text-white",
                     input: [
-                      "bg-transparent",
-                      "dark:text-white/90",
+                      "dark:text-white",
+                      "dark:placeholder-lime-100/50",
                     ],
                     inputWrapper: [
                       "shadow-xl",
+                      "dark:text-white/90",
                       "bg-lime-800/70",
                       "backdrop-blur-lg",
+                      "dark:placeholder-lime-500",
                       "dark:hover:bg-lime-800/60",
                       "group-data-[focus=true]:bg-lime-800/60",
                       "!cursor-text",
