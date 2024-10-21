@@ -5,6 +5,7 @@ import { Input } from '@nextui-org/input'
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { Search, SendHorizonal } from 'lucide-react';
 
 export default function Home() {
   const [formData, setFormData] = useState({
@@ -49,7 +50,7 @@ export default function Home() {
 
     Object.entries(formData).forEach(([key, value]) => {
       if (value === '') {
-        errors[key] = 'This field is required';
+        errors[key] = 'This field is required.';
       }
     });
 
@@ -124,9 +125,9 @@ export default function Home() {
                     ],
                   }}
                   onChange={handleChange}
-                  // onPaste={(event) => {
-                  //   event.preventDefault();
-                  // }}
+                  onPaste={(event) => {
+                    event.preventDefault();
+                  }}
                   onKeyPress={(event) => {
                     if (!/[0-9]/.test(event.key)) {
                       event.preventDefault();
@@ -137,7 +138,8 @@ export default function Home() {
               }
 
               <Button type="submit" className='bg-lime-800 w-full' disabled={loading}>
-                {loading ? 'Submitting...' : 'Submit'}
+                {loading ? 'Checking...' : 'Check'}
+                <Search size={16}/>
               </Button>
             </form>
 

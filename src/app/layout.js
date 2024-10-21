@@ -10,8 +10,8 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "AI Air Quality Evaluator",
-  description: "Project for Lv's school.",
+  title: "AirEval",
+  description: "AirEval is a simple Next.js-based web application that evaluates air quality parameters (PM2.5, temperature, humidity, TVOC, CO, CO2) and provides detailed AI-based recommendations and health impact assessments in markdown format. The application fetches air quality data and generates an AI response, then renders it beautifully.",
 };
 
 export default function RootLayout({ children }) {
