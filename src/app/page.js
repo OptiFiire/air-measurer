@@ -79,12 +79,12 @@ export default function Home() {
   };
 
   const inputFields = [
-    { label: 'PM2.5 (µg/m³)', name: 'pm25', placeholder: 'PM2.5', icon: (<Atom size={20} className='text-lime-100/50'/>) },
-    { label: 'Temperature (°C)', name: 'temperature', placeholder: 'Temperature', icon: (<Thermometer size={20} className='text-lime-100/50'/>)  },
-    { label: 'Humidity (%)', name: 'humidity', placeholder: 'Humidity', icon: (<Waves size={20} className='text-lime-100/50'/>)  },
-    { label: 'TVOC (µg/m³)', name: 'tvoc', placeholder: 'TVOC', icon: (<TriangleAlert size={20} className='text-lime-100/50'/>)  },
-    { label: 'CO (ppm)', name: 'co', placeholder: 'CO', icon: (<Flame size={20} className='text-lime-100/50'/>)  },
-    { label: 'CO2 (ppm)', name: 'co2', placeholder: 'CO2', icon: (<Sprout size={20} className='text-lime-100/50'/>)  },
+    { label: 'PM2.5 (µg/m³)', name: 'pm25', placeholder: 'PM2.5', icon: (<Atom size={20} className='text-lime-100/50' />) },
+    { label: 'Temperature (°C)', name: 'temperature', placeholder: 'Temperature', icon: (<Thermometer size={20} className='text-lime-100/50' />) },
+    { label: 'Humidity (%)', name: 'humidity', placeholder: 'Humidity', icon: (<Waves size={20} className='text-lime-100/50' />) },
+    { label: 'TVOC (µg/m³)', name: 'tvoc', placeholder: 'TVOC', icon: (<TriangleAlert size={20} className='text-lime-100/50' />) },
+    { label: 'CO (ppm)', name: 'co', placeholder: 'CO', icon: (<Flame size={20} className='text-lime-100/50' />) },
+    { label: 'CO2 (ppm)', name: 'co2', placeholder: 'CO2', icon: (<Sprout size={20} className='text-lime-100/50' />) },
   ];
 
   return (
@@ -93,7 +93,10 @@ export default function Home() {
 
         <div className={`h-full w-full flex justify-center items-center flex-col ${result ? 'py-16' : ''}`}>
 
-          <h1 className='text-4xl font-semibold text-lime-800 mb-8 text-center'>AI Air Quality Evaluator</h1>
+          <div>
+            <h1 className='text-4xl font-medium text-lime-800 text-center'>AI Air Quality Evaluator</h1>
+            <h1 className='text-md font-medium text-lime-800/50 mb-8 text-center'>Managed by ASK sophomores</h1>
+          </div>
 
           <div className='flex gap-8 md:flex-row justify-center items-center flex-col w-full'>
 
@@ -143,7 +146,7 @@ export default function Home() {
 
               <Button type="submit" className='bg-lime-800 w-full' disabled={loading}>
                 {loading ? 'Checking...' : 'Check'}
-                <Search size={16}/>
+                <Search size={16} />
               </Button>
             </form>
 

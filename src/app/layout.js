@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
       <body
-        className={`${poppins.className} bg-lime-200 text-black antialiased md:pb-0 md:pt-0 overflow-x-hidden`}
+        className={`${poppins.className} bg-lime-200 font-medium text-black antialiased md:pb-0 md:pt-0 overflow-x-hidden`}
       >
         <Provider>{children}</Provider>
       </body>
