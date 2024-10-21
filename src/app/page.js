@@ -3,6 +3,8 @@
 import { Button, Divider } from '@nextui-org/react';
 import { Input } from '@nextui-org/input'
 import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export default function Home() {
   const [formData, setFormData] = useState({
@@ -40,13 +42,6 @@ export default function Home() {
     });
   };
 
-  const formatResponse = (text) => {
-    return text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n/g, '<br />')
-      .replace(/<br \/><br \/>/g, '</p><p>');
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -73,7 +68,8 @@ export default function Home() {
       })
 
       const data = await response.json()
-      setResult(formatResponse(data.message));
+
+      setResult(data.message);
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -94,9 +90,9 @@ export default function Home() {
     <main className='container mx-auto flex items-center justify-center min-h-screen'>
       <div className='flex flex-row items-center min-h-screen w-full justify-center'>
 
-        <div className='h-full w-full flex justify-center items-center flex-col'>
+        <div className={`h-full w-full flex justify-center items-center flex-col ${result ? 'py-16' : ''}`}>
 
-          <h1 className='text-4xl font-semibold text-lime-800 mb-8'>Air Measurer</h1>
+          <h1 className='text-4xl font-semibold text-lime-800 mb-8 text-center'>AI Air Quality Evaluator</h1>
 
           <div className='flex gap-8 md:flex-row justify-center items-center flex-col w-full'>
 
@@ -153,7 +149,9 @@ export default function Home() {
                   <div className='rounded-full bg-lime-500 size-2'></div>
                 </div>
                 <Divider className='my-2 bg-lime-500 h-[1px]' />
-                <div className='text-lime-100' dangerouslySetInnerHTML={{ __html: result }} ></div>
+                <div className='text-lime-100'>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
+                </div>
               </div>
             )}
           </div>
