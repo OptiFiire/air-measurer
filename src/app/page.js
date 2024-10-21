@@ -40,6 +40,12 @@ export default function Home() {
     });
   };
 
+  const formatResponse = (text) => {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br />')
+      .replace(/<br \/><br \/>/g, '</p><p>');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,7 +73,7 @@ export default function Home() {
       })
 
       const data = await response.json()
-      setResult(data.message);
+      setResult(formatResponse(data.message));
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -106,6 +112,21 @@ export default function Home() {
                   isInvalid={!!formErrors[field.name]}
                   value={formData[field.name]}
                   errorMessage={formErrors[field.name]}
+                  classNames={{
+                    label: "dark:text-white/90",
+                    input: [
+                      "bg-transparent",
+                      "dark:text-white/90",
+                    ],
+                    inputWrapper: [
+                      "shadow-xl",
+                      "bg-lime-800/70",
+                      "backdrop-blur-lg",
+                      "dark:hover:bg-lime-800/60",
+                      "group-data-[focus=true]:bg-lime-800/60",
+                      "!cursor-text",
+                    ],
+                  }}
                   onChange={handleChange}
                   // onPaste={(event) => {
                   //   event.preventDefault();
@@ -115,7 +136,6 @@ export default function Home() {
                       event.preventDefault();
                     }
                   }}
-                  className="w-full"
                 />
               ))
               }
@@ -133,9 +153,7 @@ export default function Home() {
                   <div className='rounded-full bg-lime-500 size-2'></div>
                 </div>
                 <Divider className='my-2 bg-lime-500 h-[1px]' />
-                <div className='text-lime-100'>
-                  <p>{result}</p>
-                </div>
+                <div className='text-lime-100' dangerouslySetInnerHTML={{ __html: result }} ></div>
               </div>
             )}
           </div>

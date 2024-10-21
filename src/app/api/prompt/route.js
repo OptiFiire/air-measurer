@@ -23,16 +23,13 @@ export async function POST(req) {
 
         const request = await axios({
             method: 'POST',
-            url: 'https://api.openai.com/v1/chat/completions',
-            headers: { Authorization: `Bearer ${process.env.OPENAI_KEY}` },
-            data: {
-                "model": 'gpt-4o-mini',
-                "messages": [{ "role": "user", "content": prompt }],
-                "temperature": 0.7,
-            }
+            url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.GEMINIAI_KEY}`,
+            data: { "contents": [{ "parts": [{ "text": prompt }] }] }
         });
 
-        return NextResponse.json({ message: request.data.choices[0].message });
+        const data = await request.data.candidates[0].content.parts[0].text;
+
+        return NextResponse.json({ message: data });
     } catch (error) {
         console.error('Error generating response from OpenAI:', error);
         return new NextResponse(JSON.stringify({ error: 'Failed to generate response' }), { status: 500 });
